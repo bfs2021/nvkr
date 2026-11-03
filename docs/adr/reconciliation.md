@@ -1289,6 +1289,14 @@ No hosted Run, OIDC manifest attestation, registry read-back or independent cons
 recorded. The tag rule, tag creation, publisher exclusion, consumer verification instructions and
 interruption demonstrations remain M4-D.
 
+`run qualify --issue-manifest --out` also writes an unsigned qualification outcome for each attempt it
+qualifies, and the generated production qualifier uploads it for any result except a canceled job. An attempt
+that ends earlier (a failed setup step) or that the command's admission refuses writes none, and the job's
+`outcome-written` output is `false`. A record that cannot be written after qualification never changes the exit status. Contract tests
+cover the status mapping, the event fallback for errored attempts, admission before any work, redaction,
+times kept outside the diagnostics, the size bound, an unchanged stdout and exit status, and the generated
+steps. No hosted Run has produced an outcome, and no publisher consumes one.
+
 ## S3 boot and package delivery contract
 
 ADR-20's [specified S3 file-delivery contract](0020-artifact-publication-and-target-configuration.md#s3-file-delivery-contract)
